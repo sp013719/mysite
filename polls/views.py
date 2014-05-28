@@ -3,10 +3,14 @@ from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from polls.models import Poll, Choice
+import logging
 
+# Get an instance of logger
+logger = logging.getLogger(__name__)
  
-def index(request):
+def index(request):	
     latest_poll_list = Poll.objects.all().order_by('-pub_date')[:5]
+    logger.info('index is requested')
     context = {'latest_poll_list': latest_poll_list}
     return render(request, 'polls/index.html', context) 
  
